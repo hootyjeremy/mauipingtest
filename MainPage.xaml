@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:PingTest"
              xmlns:viewmodel="clr-namespace:PingTest.ViewModel"
              x:DataType="viewmodel:PingResponseViewModel"
              x:Class="PingTest.MainPage"
              BackgroundColor="#242424"
              >
+
+    <!--xmlns:local="clr-namespace:PingTest"-->
 
     <!--<ContentPage.BindingContext>
         <local:PingResponseViewModel />
@@ -16,20 +17,22 @@
         <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
-            VerticalOptions="Center">
+            VerticalOptions="Center"
+            >
 
             <Entry
                 x:Name="EntryIP"
                 WidthRequest="200"
-                Text="8.8.8.8" 
+                Text="{Binding PingableIP}" 
                 TextColor="#e0e0e0"
                 />
 
             <Button 
                 x:Name="PingBtn"
-                Text="Ping"
+                Text="Start/Stop"
+                Command="{Binding PingCommand}"
                 WidthRequest="200"
-                Clicked="PingBtn_Clicked"/>
+                />
 
             <Label 
                 x:Name="lblResults"
