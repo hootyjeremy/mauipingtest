@@ -16,9 +16,9 @@ public partial class PingResponseViewModel : ObservableObject
 {
     public PingResponseViewModel() 
     {
-        Items = new ObservableCollection<string>();
+        Responses = new ObservableCollection<string>();
         ResponseText = "default text";
-        PingableIP = "8.8.4.4";
+        PingableIP = "8.8.8.8";
 
         timer.Elapsed += OnTimedEvent;
         timer.AutoReset = true;
@@ -28,17 +28,18 @@ public partial class PingResponseViewModel : ObservableObject
     string pingableIP;
 
     [ObservableProperty]
-    ObservableCollection<string> items;
+    string responseText;
 
     [ObservableProperty]
-    string responseText;
+    ObservableCollection<string> responses;
+
 
     [RelayCommand]
     void Ping()
     {
         ResponseText = "Ping() RelayCommand called";
 
-
+        // send an initial ping before turning on the loop timer
         if (!timer.Enabled) 
         {
             PingHost();
@@ -87,6 +88,8 @@ public partial class PingResponseViewModel : ObservableObject
             //lblResults.Text = sbResults.ToString();
 
             ResponseText = "Reply from " + reply.Address.ToString() + " bytes=" + reply.Buffer.Length + " time=" + reply.RoundtripTime + "ms" + " TTL=" + reply.Options.Ttl;
+            Responses.Add("Reply from " + reply.Address.ToString() + " bytes=" + reply.Buffer.Length + " time=" + reply.RoundtripTime + "ms" + " TTL=" + reply.Options.Ttl);
+
 
             // $ does this need data binding instead of accessing a ui thread object from another thread?
             //lblResults.Text = responseText;
@@ -103,6 +106,7 @@ public partial class PingResponseViewModel : ObservableObject
             //sbResults.AppendLine("Buffer size: " + reply.Buffer.Length);
 
             ResponseText = sbResults.ToString();
+            Responses.Add("Reply from " + reply.Address.ToString() + " bytes=" + reply.Buffer.Length + " time=" + reply.RoundtripTime + "ms" + " TTL=" + reply.Options.Ttl);
         }
     }
 

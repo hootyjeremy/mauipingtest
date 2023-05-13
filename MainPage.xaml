@@ -40,6 +40,29 @@
                 TextColor="#e0e0e0"
                 />
 
+            <!--<ListView
+                BackgroundColor="#404040"
+                ItemsSource="{Binding Responses}"
+                >
+                
+            </ListView>-->
+
+            <CollectionView
+                ItemsSource="{Binding Responses}"
+                BackgroundColor="#404040"
+                HeightRequest="200"
+                >
+                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type x:String}">
+                        <Label Text="{Binding .}"/>
+                    </DataTemplate>
+                    
+                </CollectionView.ItemTemplate>
+                
+            </CollectionView>
+
+
         </VerticalStackLayout>
     </ScrollView>
 
