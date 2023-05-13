@@ -48,6 +48,7 @@
             </ListView>-->
 
             <CollectionView
+                x:Name="ResponseCollectionView"
                 ItemsSource="{Binding Responses}"
                 BackgroundColor="#404040"
                 HeightRequest="200"

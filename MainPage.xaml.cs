@@ -20,6 +20,7 @@ public partial class MainPage : ContentPage
 
         Debug.WriteLine("---------------------------------");
         Debug.WriteLine("Program started");
+
     }
 }
 

@@ -58,8 +58,6 @@ public partial class PingResponseViewModel : ObservableObject
     {
         Debug.WriteLine("The Elapsed event was raised at {0:HH:mm:ss.fff}", e.SignalTime);
 
-        // ? why is this in a different thread than PingBtn_Clicked?
-
         PingHost();
     }
 
@@ -77,7 +75,7 @@ public partial class PingResponseViewModel : ObservableObject
         PingReply reply = pingSender.Send(PingableIP, timeout, buffer, options);
         if (reply.Status == IPStatus.Success)
         {
-            StringBuilder sbResults = new StringBuilder();
+            //StringBuilder sbResults = new StringBuilder();
 
             //sbResults.AppendLine("Address: " + reply.Address.ToString());
             //sbResults.AppendLine("Status: " + reply.Status.ToString());
@@ -89,10 +87,7 @@ public partial class PingResponseViewModel : ObservableObject
 
             ResponseText = "Reply from " + reply.Address.ToString() + " bytes=" + reply.Buffer.Length + " time=" + reply.RoundtripTime + "ms" + " TTL=" + reply.Options.Ttl;
             Responses.Add("Reply from " + reply.Address.ToString() + " bytes=" + reply.Buffer.Length + " time=" + reply.RoundtripTime + "ms" + " TTL=" + reply.Options.Ttl);
-
-
-            // $ does this need data binding instead of accessing a ui thread object from another thread?
-            //lblResults.Text = responseText;
+            // $ how can i scroll to end (autoscroll) here?
         }
         else
         {
