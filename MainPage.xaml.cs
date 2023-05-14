@@ -8,6 +8,10 @@ using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Text;
 
+// ! git push -u origin dev
+// https://github.com/CommunityToolkit/dotnet
+// https://github.com/jamesmontemagno/mvvm-helpers
+
 
 public partial class MainPage : ContentPage
 {
@@ -20,8 +24,8 @@ public partial class MainPage : ContentPage
 
         Debug.WriteLine("---------------------------------");
         Debug.WriteLine("Program started");
-
     }
+
 }
 
 

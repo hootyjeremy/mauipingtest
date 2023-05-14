@@ -15,24 +15,39 @@
 
     <ScrollView>
         <VerticalStackLayout
-            Spacing="25"
+            Spacing="12"
             Padding="30,0"
             VerticalOptions="Center"
             >
 
             <Entry
                 x:Name="EntryIP"
-                WidthRequest="200"
+                WidthRequest="294"
                 Text="{Binding PingableIP}" 
+                BackgroundColor="#404040"
                 TextColor="#e0e0e0"
                 />
 
-            <Button 
+            <HorizontalStackLayout
+                HorizontalOptions="Center"
+                Spacing="12"
+                >
+                
+                <Button 
                 x:Name="PingBtn"
                 Text="Start/Stop"
-                Command="{Binding PingCommand}"
-                WidthRequest="200"
+                Command="{Binding TogglePingCommand}"
+                WidthRequest="140"
                 />
+
+                <Button 
+                x:Name="ClearData"
+                Text="Clear"
+                Command="{Binding ClearDataCommand}"
+                WidthRequest="140"
+                />
+            </HorizontalStackLayout>
+            
 
             <Label 
                 x:Name="lblResults"
@@ -51,16 +66,14 @@
                 x:Name="ResponseCollectionView"
                 ItemsSource="{Binding Responses}"
                 BackgroundColor="#404040"
-                HeightRequest="200"
+                HeightRequest="200" 
                 >
-                
+
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type x:String}">
-                        <Label Text="{Binding .}"/>
+                    <DataTemplate x:DataType="{x:Type x:String}" >
+                        <Label Text="{Binding .}" BackgroundColor="#303030" />
                     </DataTemplate>
-                    
                 </CollectionView.ItemTemplate>
-                
             </CollectionView>
 
 

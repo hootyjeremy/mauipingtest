@@ -21,8 +21,9 @@ public partial class PingResponseViewModel : ObservableObject
         PingableIP = "8.8.8.8";
 
         timer.Elapsed += OnTimedEvent;
-        timer.AutoReset = true;
+        timer.AutoReset = true;        
     }
+
 
     [ObservableProperty]
     string pingableIP;
@@ -35,7 +36,14 @@ public partial class PingResponseViewModel : ObservableObject
 
 
     [RelayCommand]
-    void Ping()
+    void ClearData()
+    {
+        Responses.Clear();
+    }
+
+
+    [RelayCommand]
+    void TogglePing()
     {
         ResponseText = "Ping() RelayCommand called";
 
@@ -43,20 +51,18 @@ public partial class PingResponseViewModel : ObservableObject
         if (!timer.Enabled) 
         {
             PingHost();
-        }
+        }        
 
         timer.Enabled = !timer.Enabled;
-
         Debug.WriteLine("timer.Enabled=" + timer.Enabled);
     }
-
 
 
     System.Timers.Timer timer = new System.Timers.Timer(2000);
 
     private void OnTimedEvent(Object source, ElapsedEventArgs e)
     {
-        Debug.WriteLine("The Elapsed event was raised at {0:HH:mm:ss.fff}", e.SignalTime);
+        //Debug.WriteLine("The Elapsed event was raised at {0:HH:mm:ss.fff}", e.SignalTime);
 
         PingHost();
     }
@@ -75,19 +81,12 @@ public partial class PingResponseViewModel : ObservableObject
         PingReply reply = pingSender.Send(PingableIP, timeout, buffer, options);
         if (reply.Status == IPStatus.Success)
         {
-            //StringBuilder sbResults = new StringBuilder();
-
-            //sbResults.AppendLine("Address: " + reply.Address.ToString());
-            //sbResults.AppendLine("Status: " + reply.Status.ToString());
-            //sbResults.AppendLine("RoundTrip time: " + reply.RoundtripTime + "ms");
-            //sbResults.AppendLine("Time to live: " + reply.Options.Ttl);
-            //sbResults.AppendLine("Don't fragment: " + reply.Options.DontFragment);
-            //sbResults.AppendLine("Buffer size: " + reply.Buffer.Length);
-            //lblResults.Text = sbResults.ToString();
-
             ResponseText = "Reply from " + reply.Address.ToString() + " bytes=" + reply.Buffer.Length + " time=" + reply.RoundtripTime + "ms" + " TTL=" + reply.Options.Ttl;
-            Responses.Add("Reply from " + reply.Address.ToString() + " bytes=" + reply.Buffer.Length + " time=" + reply.RoundtripTime + "ms" + " TTL=" + reply.Options.Ttl);
-            // $ how can i scroll to end (autoscroll) here?
+            //Responses.Add("Reply from " + reply.Address.ToString() + " bytes=" + reply.Buffer.Length + " time=" + reply.RoundtripTime + "ms" + " TTL=" + reply.Options.Ttl);
+            Responses.Add("Reply from " + reply.Address.ToString() + " : " + reply.RoundtripTime + "ms");
+            Debug.WriteLine("Reply from " + reply.Address.ToString() + " : " + reply.RoundtripTime + "ms");
+            
+            // ? how can i scroll to the end of ResponseCollectionView here?
         }
         else
         {
@@ -101,7 +100,8 @@ public partial class PingResponseViewModel : ObservableObject
             //sbResults.AppendLine("Buffer size: " + reply.Buffer.Length);
 
             ResponseText = sbResults.ToString();
-            Responses.Add("Reply from " + reply.Address.ToString() + " bytes=" + reply.Buffer.Length + " time=" + reply.RoundtripTime + "ms" + " TTL=" + reply.Options.Ttl);
+            Responses.Add("failed ping...");
+            Debug.WriteLine("failed ping");
         }
     }
 
